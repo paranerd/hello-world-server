@@ -2,10 +2,13 @@ const express = require('express');
 const app = express();
 const os = require('os');
 const hostname = os.hostname();
-const version = '1.0';
+const version = 'v2.0.0';
+const datetime = new Date();
 
 app.get('/', (req, res) => {
-  res.send(`Hello, World!</br>Version: ${version}</br>Hostname: ${hostname}`);
+  res.send(
+    `Hello, World!</br>Version: ${version}</br>Hostname: ${hostname}</br>Time: ${datetime.toISOString()}`
+  );
 });
 
 app.get('/health', (req, res) => {
