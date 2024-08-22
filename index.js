@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const os = require('os');
 const hostname = os.hostname();
-const version = 'v2.0.0';
+const version = 'v3.0.0';
 const datetime = new Date();
 
 app.get('/', (req, res) => {
