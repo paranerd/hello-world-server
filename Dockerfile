@@ -1,20 +1,26 @@
-# Use the latest LTS version of Node.js as the base image
-FROM node:lts-alpine
+# Use Node.js 20 as base image for building
+FROM node:20 AS build-env
+
+# Copy the application coe
+COPY . /app
 
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the container
-COPY package*.json ./
-
 # Install dependencies
-RUN npm ci
+RUN npm ci --omit=dev
 
-# Copy the rest of the application code
-COPY . .
+# Use distroless Node 20 as base image for production
+FROM gcr.io/distroless/nodejs20-debian12
+
+# Copy artifacts from build stage
+COPY --from=build-env /app /app
+
+# Set the working directory
+WORKDIR /app
 
 # Expose the port the application will listen on
 EXPOSE 8080
 
-# Start the application
-CMD ["npm", "start"]
+# Run the app
+CMD ["index.js"]
