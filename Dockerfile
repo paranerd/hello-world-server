@@ -23,4 +23,4 @@ WORKDIR /app
 EXPOSE 8080
 
 # Run the app
-CMD ["index.js"]
+CMD ["src/index.js"]
